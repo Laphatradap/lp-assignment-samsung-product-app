@@ -1,19 +1,19 @@
 {
-  "editor.defaultFormatter": "esbenp.prettier-vscode",
-  "editor.formatOnSave": false,
-  "editor.codeActionsOnSave": {
-    "source.fixAll.eslint": true
-  },
-  "[json]": {
-    "editor.formatOnSave": true
-  },
-  "[html]": {
-    "editor.formatOnSave": true
-  },
-  "[css]": {
-    "editor.formatOnSave": true
-  },
-  "[scss]": {
-    "editor.formatOnSave": true
-  }
+ "editor.defaultFormatter": "esbenp.prettier-vscode",
+ "editor.formatOnSave": true,
+ "editor.codeActionsOnSave": {
+  "source.fixAll.eslint": true
+ },
+ "[json]": {
+  "editor.formatOnSave": true
+ },
+ "[html]": {
+  "editor.formatOnSave": true
+ },
+ "[css]": {
+  "editor.formatOnSave": true
+ },
+ "[scss]": {
+  "editor.formatOnSave": true
+ }
 }
