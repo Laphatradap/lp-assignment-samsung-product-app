@@ -81,42 +81,38 @@ const Products = () => {
     setSelected(selectedGroup);
   };
 
-  const handleColorClick = (
+  const handleOptionClick = (
+    type: string,
     item: ProductProps,
     option: ChipOptionListProps
   ) => {
-    setSelectorState((prevState) => {
-      return {
-        ...prevState,
-        [item.fmyMarketingName]: [option.optionLocalName].concat(
-          selectorState[item.fmyMarketingName].slice(1)
-        ),
-      };
-    });
-  };
+    if (type === color) {
+      const selectedColorOption = [option.optionLocalName].concat(
+        selectorState[item.fmyMarketingName].slice(1)
+      );
 
-  const handleMemoryClick = (
-    item: ProductProps,
-    option: ChipOptionListProps
-  ) => {
-    setSelectorState((prevState) => {
-      return {
-        ...prevState,
-        [item.fmyMarketingName]: [
-          selectorState[item.fmyMarketingName][0],
-          option.optionLocalName,
-        ],
-      };
-    });
-  };
+      setSelectorState({
+        ...selectorState,
+        [item.fmyMarketingName]: selectedColorOption,
+      });
+    } else if (type === mobile_memory) {
+      const selectedMemoryOption = [
+        selectorState[item.fmyMarketingName][0],
+        option.optionLocalName,
+      ];
 
-  const handleSizeClick = (item: ProductProps, option: ChipOptionListProps) => {
-    setSelectorState((prevState) => {
-      return {
-        ...prevState,
-        [item.fmyMarketingName]: [option.optionLocalName],
-      };
-    });
+      setSelectorState({
+        ...selectorState,
+        [item.fmyMarketingName]: selectedMemoryOption,
+      });
+    } else if (type === tv_size) {
+      const selectedTVSizeOption = [option.optionLocalName];
+
+      setSelectorState({
+        ...selectorState,
+        [item.fmyMarketingName]: selectedTVSizeOption,
+      });
+    }
   };
 
   return (
@@ -175,69 +171,40 @@ const Products = () => {
                 </Grid>
                 <Grid item xs={12} container>
                   {(item.chipOptions || []).map((chip, index) => {
-                    if (chip.fmyChipType === color) {
-                      return (
-                        <Grid item xs={12} key={index}>
-                          {chip.optionList.map((option, index) => {
-                            return (
-                              <Chip
-                                key={index}
-                                onClick={() => {
-                                  handleColorClick(item, option);
-                                }}
-                                size="small"
-                                sx={{
-                                  bgcolor: option.optionCode,
-                                  margin: "2px",
-                                }}
-                              />
-                            );
-                          })}
-                        </Grid>
-                      );
-                    } else if (chip.fmyChipType === mobile_memory) {
-                      return (
-                        <Grid item xs={12} key={index}>
-                          {chip.optionList.map((option, index) => {
-                            return (
-                              <Chip
-                                key={index}
-                                label={option.optionLocalName}
-                                onClick={() => {
-                                  handleMemoryClick(item, option);
-                                }}
-                                size="small"
-                                variant="outlined"
-                                sx={{
-                                  margin: "4px",
-                                }}
-                              />
-                            );
-                          })}
-                        </Grid>
-                      );
-                    } else if (chip.fmyChipType === tv_size)
-                      return (
-                        <Grid item xs={12} key={index}>
-                          {chip.optionList.map((option, index) => {
-                            return (
-                              <Chip
-                                key={index}
-                                label={option.optionLocalName}
-                                onClick={() => {
-                                  handleSizeClick(item, option);
-                                }}
-                                size="small"
-                                variant="outlined"
-                                sx={{
-                                  margin: "4px",
-                                }}
-                              />
-                            );
-                          })}
-                        </Grid>
-                      );
-                    return null;
+                    return (
+                      <Grid item xs={12} key={index}>
+                        {chip.optionList.map((option, index) => {
+                          return (
+                            <Chip
+                              key={index}
+                              label={
+                                chip.fmyChipType !== color &&
+                                option.optionLocalName
+                              }
+                              onClick={() => {
+                                handleOptionClick(
+                                  chip.fmyChipType,
+                                  item,
+                                  option
+                                );
+                              }}
+                              size="small"
+                              variant={
+                                chip.fmyChipType !== color
+                                  ? "outlined"
+                                  : "filled"
+                              }
+                              sx={{
+                                bgcolor:
+                                  chip.fmyChipType === color &&
+                                  option.optionCode,
+                                margin: "2px",
+                              }}
+                            />
+                          );
+                        })}
+                      </Grid>
+                    );
                   })}
                 </Grid>
                 <Grid item xs={12}>
